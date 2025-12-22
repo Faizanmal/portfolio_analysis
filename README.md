@@ -4,6 +4,54 @@
 
 A **cutting-edge, autonomous AI/ML ecosystem** that completely transforms investment analysis and portfolio management. This next-level platform solves critical real-world pain points through advanced AI orchestration, eliminating manual processes and human emotional bias while delivering institutional-grade performance.
 
+## 🤖 NEW: Central Autonomous Intelligence (CAI) System
+
+The platform now features a **Central Autonomous Intelligence (CAI)** - a master orchestration system that coordinates all agents, enforces global constraints, and ensures institutional-grade decision-making.
+
+### CAI Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **11-Stage Decision Pipeline** | Ingest → Validate → Detect Regime → Generate → Evaluate → Comply → Simulate → Rank → Execute → Log → Monitor |
+| **6 Specialized Agents** | Portfolio Manager, Risk Analyst, Market Researcher, NLP Intelligence, Trading Agent, Compliance Agent |
+| **Capital Allocation Committee** | Weighted voting system for major decisions |
+| **Black Swan Sentinel** | Real-time detection of volatility spikes, correlation breakdowns, liquidity crises |
+| **8 Kill Switch Types** | Portfolio, Position, Volatility, Liquidity, Correlation, Sentiment, Regulatory, Manual |
+| **SHAP Explainability** | Feature attribution and natural language explanations for all decisions |
+| **Regime-Adaptive Risk** | Dynamic risk limits based on detected market regime |
+| **Self-Improvement Loop** | Drift detection, strategy retirement, continuous learning |
+| **Blockchain Audit Trail** | Tamper-proof cryptographic logging of all decisions |
+
+### Quick Start with CAI
+
+```bash
+# Run CAI in autonomous mode
+python cai_main.py
+
+# Run in advisory mode (recommendations only)
+python cai_main.py --mode advisory
+
+# Run demo
+python cai_main.py --demo
+
+# Check system health
+python cai_main.py --health-check
+```
+
+### CAI Global Constraints (Non-Negotiable)
+
+```yaml
+# These constraints are NEVER exceeded
+max_portfolio_var_95: 2%      # Daily VaR limit
+max_position_size: 10%        # Single position limit
+max_sector_concentration: 30% # Sector exposure limit
+max_leverage: 1.0x            # No leverage by default
+max_drawdown: 10%             # Maximum drawdown limit
+min_trade_confidence: 65%     # Minimum confidence for trades
+```
+
+---
+
 ## 🔥 Game-Changing Features & Real-World Pain Points Solved
 
 ### 🤖 **1. Autonomous Multi-Agent AI Orchestration System**
@@ -93,14 +141,21 @@ A **cutting-edge, autonomous AI/ML ecosystem** that completely transforms invest
 ## 📁 Next-Level Project Architecture
 
 ```
-├── main_orchestrator.py          # 🎯 Central AI system coordinator
-├── agents/                       # 🤖 Autonomous AI agent system
+├── cai_main.py                  # 🤖 CAI unified entry point
+├── main_orchestrator.py         # 🎯 Central AI system coordinator
+├── core/                        # 🧠 CAI Core System (NEW)
+│   ├── __init__.py              # Core module exports
+│   ├── cai_orchestrator.py      # Central Autonomous Intelligence
+│   ├── safety_guardrails.py     # Kill switches, Black Swan Sentinel
+│   ├── explainability.py        # SHAP explanations, NL reports
+│   └── self_improvement.py      # Drift detection, strategy retirement
+├── agents/                      # 🤖 Autonomous AI agent system
 │   ├── base_agent.py            # Core agent framework with communication
 │   ├── portfolio_manager.py     # Portfolio optimization & rebalancing
 │   ├── risk_analyst.py          # Advanced risk assessment & monitoring
-│   ├── market_researcher.py     # Trend analysis & opportunity detection
-│   ├── compliance_monitor.py    # Regulatory compliance automation
-│   └── news_analyst.py          # Real-time news sentiment analysis
+│   ├── market_researcher.py     # Market regime detection & analysis
+│   ├── compliance_agent.py      # Regulatory compliance & audit
+│   └── trading_agent.py         # Enhanced trading with CAI integration
 ├── real_time/                   # ⚡ Real-time intelligence system
 │   ├── market_intelligence.py   # Multi-source data ingestion & anomaly detection
 │   ├── data_sources.py          # Yahoo Finance, News API, Social Media

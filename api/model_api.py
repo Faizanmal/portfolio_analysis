@@ -9,6 +9,12 @@ Features:
 - Portfolio optimization endpoint
 - Model metadata and health checks
 - API documentation (Swagger/OpenAPI)
+- Mobile PWA support
+- Social Trading platform
+- Predictive Analytics
+- Real-time Collaboration
+- Conversational AI Assistant
+- Personalized Learning
 """
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks
@@ -28,12 +34,53 @@ from models.risk_predictor import RiskPredictor
 from models.sentiment_analyzer import SentimentAnalyzer
 from models.portfolio_optimizer import PortfolioOptimizer
 
+# Import new feature modules
+try:
+    from mobile.pwa_app import MobileAPIService
+except ImportError:
+    MobileAPIService = None
+
+try:
+    from social.social_trading import SocialTradingPlatform
+except ImportError:
+    SocialTradingPlatform = None
+
+try:
+    from analytics.predictive_analytics import PredictiveAnalyticsPlatform
+except ImportError:
+    PredictiveAnalyticsPlatform = None
+
+try:
+    from collaboration.real_time_collaboration import CollaborationPlatform
+except ImportError:
+    CollaborationPlatform = None
+
+try:
+    from assistant.conversational_ai import ConversationalAI
+except ImportError:
+    ConversationalAI = None
+
+try:
+    from learning.personalized_learning import PersonalizedLearningPlatform
+except ImportError:
+    PersonalizedLearningPlatform = None
+
 
 # Initialize FastAPI app
 app = FastAPI(
     title="AI Portfolio Analysis API",
-    description="REST API for AI-powered portfolio analysis and predictions",
-    version="1.0.0"
+    description="""REST API for AI-powered portfolio analysis and predictions.
+    
+## Features
+- 📊 Risk Prediction & Portfolio Optimization
+- 📱 Mobile PWA Support
+- 👥 Social Trading Platform
+- 📈 Predictive Analytics
+- 🤝 Real-time Collaboration
+- 🤖 Conversational AI Assistant
+- 📚 Personalized Learning
+    """,
+    version="2.0.0"
 )
 
 # Add CORS middleware
@@ -49,6 +96,14 @@ app.add_middleware(
 risk_model = None
 sentiment_analyzer = None
 portfolio_optimizer = None
+
+# New feature platform instances
+mobile_service = None
+social_platform = None
+analytics_platform = None
+collaboration_platform = None
+ai_assistant = None
+learning_platform = None
 
 
 # Pydantic models for request/response
@@ -135,24 +190,8 @@ class PortfolioResponse(BaseModel):
     """Portfolio optimization response."""
     weights: Dict[str, float]
     expected_return: float
-    volatility: float
-    sharpe_ratio: float
-    timestamp: str
-
-
-class HealthResponse(BaseModel):
-    """API health check response."""
-    status: str
-    timestamp: str
-    models_loaded: Dict[str, bool]
-    version: str
-
-
-# Startup/Shutdown events
-@app.on_event("startup")
-async def startup_event():
-    """Load models on startup."""
-    global risk_model, sentiment_analyzer, portfolio_optimizer
+    global mobile_service, social_platform, analytics_platform
+    global collaboration_platform, ai_assistant, learning_platform
     
     logger.info("Loading models...")
     
@@ -160,6 +199,75 @@ async def startup_event():
         # Load risk prediction model
         risk_model = RiskPredictor()
         model_path = Path("data/models/risk_predictor.pkl")
+        if model_path.exists():
+            risk_model.load_model()
+            logger.info("Risk model loaded successfully")
+        else:
+            logger.warning("Risk model not found, will need to train first")
+        
+        # Load sentiment analyzer
+        sentiment_analyzer = SentimentAnalyzer()
+        logger.info("Sentiment analyzer loaded successfully")
+        
+        # Initialize portfolio optimizer
+        portfolio_optimizer = PortfolioOptimizer()
+        logger.info("Portfolio optimizer initialized")
+        
+        logger.info("All models loaded successfully")
+        
+    except Exception as e:
+        logger.error(f"Error loading models: {str(e)}")
+    
+    # Initialize new feature platforms
+    platform_config = {}
+    
+    try:
+        if MobileAPIService:
+            mobile_service = MobileAPIService(platform_config)
+            app.include_router(mobile_service.get_api_routes())
+            logger.info("Mobile PWA service initialized")
+    except Exception as e:
+        logger.warning(f"Mobile service not available: {e}")
+    
+    try:
+        if SocialTradingPlatform:
+            social_platform = SocialTradingPlatform(platform_config)
+            app.include_router(social_platform.get_api_routes())
+            logger.info("Social trading platform initialized")
+    except Exception as e:
+        logger.warning(f"Social platform not available: {e}")
+    
+    try:
+        if PredictiveAnalyticsPlatform:
+            analytics_platform = PredictiveAnalyticsPlatform(platform_config)
+            app.include_router(analytics_platform.get_api_routes())
+            logger.info("Predictive analytics platform initialized")
+    except Exception as e:
+        logger.warning(f"Analytics platform not available: {e}")
+    
+    try:
+        if CollaborationPlatform:
+            collaboration_platform = CollaborationPlatform(platform_config)
+            app.include_router(collaboration_platform.get_api_routes())
+            logger.info("Collaboration platform initialized")
+    except Exception as e:
+        logger.warning(f"Collaboration platform not available: {e}")
+    
+    try:
+        if ConversationalAI:
+            ai_assistant = ConversationalAI(platform_config)
+            app.include_router(ai_assistant.get_api_routes())
+            logger.info("Conversational AI assistant initialized")
+    except Exception as e:
+        logger.warning(f"AI assistant not available: {e}")
+    
+    try:
+        if PersonalizedLearningPlatform:
+            learning_platform = PersonalizedLearningPlatform(platform_config)
+            app.include_router(learning_platform.get_api_routes())
+            logger.info("Learning platform initialized")
+    except Exception as e:
+        logger.warning(f"Learning platform not available: {er.pkl")
         if model_path.exists():
             risk_model.load_model()
             logger.info("Risk model loaded successfully")
@@ -210,8 +318,30 @@ async def health_check():
             "sentiment_analyzer": sentiment_analyzer is not None,
             "portfolio_optimizer": portfolio_optimizer is not None
         },
-        version="1.0.0"
+        version="2.0.0"
     )
+
+
+@app.get("/api/v1/features", tags=["Health"])
+async def list_features():
+    """List all available feature modules."""
+    return {
+        "features": {
+            "core_models": {
+                "risk_predictor": risk_model is not None,
+                "sentiment_analyzer": sentiment_analyzer is not None,
+                "portfolio_optimizer": portfolio_optimizer is not None
+            },
+            "mobile_pwa": mobile_service is not None,
+            "social_trading": social_platform is not None,
+            "predictive_analytics": analytics_platform is not None,
+            "collaboration": collaboration_platform is not None,
+            "ai_assistant": ai_assistant is not None,
+            "learning_platform": learning_platform is not None
+        },
+        "api_routes": [route.path for route in app.routes],
+        "version": "2.0.0"
+    }
 
 
 @app.post("/api/v1/predict/risk", response_model=RiskPredictionResponse, tags=["Predictions"])

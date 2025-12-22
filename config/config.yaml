@@ -1,11 +1,65 @@
 # Configuration file for the AI Portfolio Analysis Platform
+# Central Autonomous Intelligence (CAI) Configuration
 
 # Application Settings
 app:
-  name: "AI Portfolio Analysis Platform"
-  version: "1.0.0"
+  name: "AI Portfolio Analysis Platform - CAI Edition"
+  version: "2.0.0"
   debug: false
   timezone: "America/New_York"
+  mode: "institutional"  # 'institutional', 'retail', 'demo'
+
+# ============================================
+# CENTRAL AUTONOMOUS INTELLIGENCE (CAI) SETTINGS
+# ============================================
+
+cai:
+  enabled: true
+  mode: "autonomous"  # 'autonomous', 'advisory', 'manual_override'
+  
+  # Global Constraints (NON-NEGOTIABLE)
+  constraints:
+    # Risk Limits
+    max_portfolio_var_95: 0.02      # 2% daily VaR limit
+    max_portfolio_var_99: 0.035     # 3.5% daily VaR limit  
+    max_position_size: 0.10         # 10% max single position
+    max_sector_concentration: 0.30  # 30% max sector exposure
+    max_leverage: 1.0               # No leverage by default
+    max_drawdown: 0.10              # 10% max drawdown
+    
+    # Trading Constraints
+    min_sharpe_ratio: 0.5           # Minimum expected Sharpe
+    min_risk_reward_ratio: 2.0      # Minimum risk-reward
+    min_liquidity_ratio: 0.05       # 5% minimum liquid assets
+    
+    # Confidence Thresholds
+    min_trade_confidence: 0.65      # Minimum confidence for trades
+    uncertainty_reduction_threshold: 0.50  # Reduce position if below
+    abstain_threshold: 0.35         # Abstain if confidence below
+    
+    # Regime-Adaptive Multipliers
+    crisis_risk_multiplier: 0.5     # Halve risk limits in crisis
+    bull_risk_multiplier: 1.2       # Slight increase in stable bull
+    
+    # Safety Limits
+    daily_loss_limit: 0.01          # 1% daily loss limit
+    max_correlation: 0.70           # Maximum correlation between positions
+
+  # Capital Allocation Committee
+  capital_committee:
+    enabled: true
+    voting_agents:
+      - portfolio_manager
+      - risk_analyst
+      - market_researcher
+    approval_threshold: 0.60        # 60% weighted approval required
+    
+  # Self-Improvement Settings
+  self_improvement:
+    enabled: true
+    drift_detection_interval: 3600  # Check every hour
+    model_retraining_threshold: 0.15  # Retrain if drift > 15%
+    strategy_retirement_threshold: 0.30  # Retire if score < 0.3
 
 # Model Settings
 models:
@@ -152,3 +206,430 @@ security:
   jwt_expiry_hours: 24
   cors_max_age: 3600
   rate_limit_storage: "redis"
+
+# ============================================
+# AGENT CONFIGURATIONS
+# ============================================
+
+agents:
+  portfolio_manager:
+    enabled: true
+    weight_in_committee: 0.35
+    risk_tolerance: "moderate"
+    rebalance_threshold: 0.05
+    optimization_method: "max_sharpe"
+    
+  risk_analyst:
+    enabled: true
+    weight_in_committee: 0.30
+    var_confidence_level: 0.95
+    stress_test_scenarios: 1000
+    regime_sensitivity: "high"
+    
+  market_researcher:
+    enabled: true
+    weight_in_committee: 0.15
+    data_sources:
+      - yahoo_finance
+      - alpha_vantage
+    regime_detection_lookback: 252  # 1 year
+    factor_analysis_enabled: true
+    
+  nlp_intelligence:
+    enabled: true
+    weight_in_committee: 0.10
+    models:
+      - finbert
+      - ner_financial
+    sentiment_threshold: 0.6
+    news_sources:
+      - reuters
+      - bloomberg
+      
+  trading_agent:
+    enabled: true
+    weight_in_committee: 0.05
+    strategies:
+      - momentum
+      - mean_reversion
+      - trend_following
+    max_daily_trades: 50
+    simulation_runs: 1000
+    
+  compliance_agent:
+    enabled: true
+    weight_in_committee: 0.05
+    regulatory_frameworks:
+      - SEC
+      - FINRA
+    audit_trail_retention_days: 2555  # 7 years
+
+# ============================================
+# SAFETY GUARDRAILS
+# ============================================
+
+safety:
+  kill_switches:
+    portfolio_level:
+      enabled: true
+      auto_trigger: true
+      max_drawdown_trigger: 0.08
+    position_level:
+      enabled: true
+      auto_trigger: true
+      max_loss_trigger: 0.15
+    volatility_regime:
+      enabled: true
+      auto_trigger: true
+      vix_threshold: 35
+    liquidity_crisis:
+      enabled: true
+      auto_trigger: true
+      spread_threshold: 0.05
+    correlation_breakdown:
+      enabled: true
+      auto_trigger: true
+      correlation_spike_threshold: 0.85
+    news_sentiment:
+      enabled: true
+      auto_trigger: false
+      negative_sentiment_threshold: -0.7
+    regulatory_halt:
+      enabled: true
+      auto_trigger: true
+    manual_override:
+      enabled: true
+      authorized_users:
+        - admin
+        - cio
+        - risk_manager
+        
+  black_swan_sentinel:
+    enabled: true
+    volatility_spike_threshold: 3.0
+    correlation_breakdown_threshold: 0.4
+    liquidity_dry_up_threshold: 0.3
+    alert_channels:
+      - email
+      - slack
+      - dashboard
+      
+  ethical_guardrails:
+    enabled: true
+    max_position_leverage: 2.0
+    max_sector_concentration: 0.35
+    max_daily_turnover: 0.25
+    max_market_impact: 0.005
+    excluded_sectors:
+      - tobacco
+      - weapons
+      - gambling
+
+# ============================================
+# EXPLAINABILITY SETTINGS
+# ============================================
+
+explainability:
+  enabled: true
+  shap:
+    enabled: true
+    background_samples: 100
+    max_features_display: 10
+  natural_language:
+    enabled: true
+    audience_levels:
+      - portfolio_committee
+      - risk_committee  
+      - regulator
+  audit_reports:
+    auto_generate: true
+    include_visualizations: true
+    retention_days: 2555  # 7 years
+
+# ============================================
+# DECISION PIPELINE SETTINGS
+# ============================================
+
+decision_pipeline:
+  stages:
+    - name: "ingest_data"
+      timeout_seconds: 30
+      retry_count: 3
+    - name: "validate_data_quality"
+      timeout_seconds: 10
+      min_quality_score: 0.85
+    - name: "detect_market_regime"
+      timeout_seconds: 15
+      ensemble_models: 4
+    - name: "generate_strategy_candidates"
+      timeout_seconds: 60
+      max_candidates: 20
+    - name: "evaluate_risk"
+      timeout_seconds: 45
+      monte_carlo_simulations: 10000
+    - name: "check_compliance"
+      timeout_seconds: 20
+      strict_mode: true
+    - name: "simulate_outcomes"
+      timeout_seconds: 120
+      simulation_paths: 1000
+    - name: "rank_alternatives"
+      timeout_seconds: 15
+      ranking_method: "weighted_score"
+    - name: "execute_or_abstain"
+      timeout_seconds: 30
+      require_committee_approval: true
+    - name: "log_everything"
+      timeout_seconds: 5
+      blockchain_audit: false
+    - name: "monitor_post_action"
+      continuous: true
+      alert_threshold: 0.02
+# ============================================
+# NEW FEATURE MODULES (v2.0.0)
+# ============================================
+
+# Mobile PWA Configuration
+mobile_pwa:
+  enabled: true
+  push_notifications:
+    enabled: true
+    vapid_private_key: "change-this-in-production"
+    vapid_public_key: "change-this-in-production"
+    fcm_enabled: false
+    fcm_credentials_path: ""
+    apns_enabled: false
+    default_ttl_seconds: 86400
+  biometric_auth:
+    enabled: true
+    webauthn_rp_id: "portfolio-analysis.example.com"
+    webauthn_rp_name: "AI Portfolio Analysis"
+    allowed_authenticators:
+      - platform
+      - cross-platform
+  offline_mode:
+    enabled: true
+    cache_strategy: "stale-while-revalidate"
+    max_offline_hours: 24
+    sync_on_reconnect: true
+  voice_commands:
+    enabled: true
+    wake_word: "portfolio"
+    language: "en-US"
+    confidence_threshold: 0.7
+
+# Social Trading Configuration
+social_trading:
+  enabled: true
+  portfolio_sharing:
+    enabled: true
+    default_privacy: "private"
+    allowed_privacies:
+      - public
+      - followers_only
+      - private
+      - benchmark_anonymous
+  strategy_marketplace:
+    enabled: true
+    min_strategy_rating: 3.0
+    commission_rate: 0.20  # 20% platform fee
+    max_strategies_per_user: 10
+  leaderboard:
+    enabled: true
+    update_frequency_minutes: 60
+    min_track_record_days: 30
+    verified_only: true
+  copy_trading:
+    enabled: true
+    min_allocation: 100
+    max_allocation: 100000
+    max_risk_per_trade_pct: 10
+    proportional_sizing: true
+  expert_network:
+    enabled: true
+    consultation_fee_min: 50
+    consultation_fee_max: 500
+
+# Predictive Analytics Configuration
+predictive_analytics:
+  enabled: true
+  price_prediction:
+    enabled: true
+    models:
+      - lstm
+      - transformer
+      - xgboost
+    ensemble_method: "weighted_average"
+    prediction_horizons:
+      - 7
+      - 14
+      - 30
+    min_confidence: 0.5
+  regime_forecasting:
+    enabled: true
+    regimes:
+      - crisis
+      - bear
+      - normal
+      - bull
+    transition_matrix_lookback_days: 252
+    update_frequency_hours: 6
+  sector_rotation:
+    enabled: true
+    economic_cycles:
+      - early_expansion
+      - mid_expansion
+      - late_expansion
+      - early_contraction
+      - mid_contraction
+      - late_contraction
+  monte_carlo:
+    enabled: true
+    default_simulations: 1000
+    max_simulations: 10000
+    time_horizon_days: 252
+  recommendations:
+    enabled: true
+    algorithm: "collaborative_filtering"
+    min_recommendation_score: 0.6
+
+# Real-Time Collaboration Configuration
+collaboration:
+  enabled: true
+  workspaces:
+    enabled: true
+    max_members_per_workspace: 50
+    max_workspaces_per_user: 10
+  voting:
+    enabled: true
+    default_quorum: 0.5
+    decision_types:
+      - trade
+      - rebalance
+      - strategy_change
+      - risk_limit_change
+    weight_by_role: true
+    role_weights:
+      owner: 2.0
+      admin: 1.5
+      portfolio_manager: 1.5
+      risk_officer: 1.3
+      analyst: 1.0
+      trader: 1.0
+      viewer: 0.5
+  comments:
+    enabled: true
+    mentions_enabled: true
+    max_comment_length: 5000
+  audit_trail:
+    enabled: true
+    retention_days: 2555  # 7 years
+    include_system_events: true
+    export_format: "json"
+  websocket:
+    enabled: true
+    ping_interval_seconds: 30
+    max_connections_per_user: 5
+
+# Conversational AI Assistant Configuration
+ai_assistant:
+  enabled: true
+  natural_language:
+    enabled: true
+    default_language: "en"
+    supported_languages:
+      - en
+      - es
+      - fr
+      - de
+      - pt
+      - zh
+      - ja
+      - ko
+    fallback_language: "en"
+  voice:
+    enabled: true
+    speech_to_text: true
+    text_to_speech: true
+    voice_name: "en-US-Standard-B"
+  response_styles:
+    default: "detailed"
+    available:
+      - concise
+      - detailed
+      - technical
+      - simple
+      - educational
+  educational:
+    enabled: true
+    auto_explain: true
+    concepts_database: "data/financial_concepts.json"
+  behavior_tracking:
+    enabled: true
+    personalization: true
+    max_history_items: 100
+  context:
+    max_messages: 50
+    session_timeout_minutes: 60
+
+# Personalized Learning Configuration
+learning:
+  enabled: true
+  onboarding:
+    enabled: true
+    adaptive: true
+    steps:
+      - welcome
+      - experience_level
+      - investment_goal
+      - risk_tolerance
+      - initial_assessment
+      - portfolio_tour
+      - first_analysis
+      - complete
+    skip_allowed: false
+  courses:
+    enabled: true
+    categories:
+      - fundamentals
+      - technical_analysis
+      - portfolio_management
+      - risk_management
+      - advanced_trading
+      - ai_trading
+  gamification:
+    enabled: true
+    xp_per_lesson: 50
+    xp_per_course: 500
+    streak_bonus_multiplier: 1.5
+    level_thresholds:
+      - 0
+      - 100
+      - 250
+      - 500
+      - 1000
+      - 1750
+      - 2750
+      - 4000
+      - 5500
+      - 7500
+      - 10000
+  achievements:
+    enabled: true
+    categories:
+      - learning
+      - portfolio
+      - trading
+      - engagement
+      - milestone
+  learning_paths:
+    adaptive: true
+    personalized: true
+    pace_options:
+      - slow
+      - moderate
+      - fast
+  assessments:
+    enabled: true
+    adaptive: true
+    retake_cooldown_hours: 24
