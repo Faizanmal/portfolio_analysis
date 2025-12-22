@@ -1,0 +1,68 @@
+{
+  "start_time": "2025-10-29T15:23:05.099256",
+  "config": {
+    "extract_stocks": true,
+    "extract_news": true,
+    "extract_indicators": true,
+    "tickers": [
+      "AAPL",
+      "GOOGL",
+      "MSFT",
+      "AMZN",
+      "TSLA"
+    ],
+    "period": "6mo",
+    "news_keywords": [
+      "stocks",
+      "market",
+      "earnings",
+      "investment"
+    ],
+    "max_news": 50,
+    "validation_rules": {
+      "max_missing_pct": 10,
+      "value_ranges": {
+        "Close": [
+          0,
+          10000
+        ],
+        "Volume": [
+          0,
+          1000000000000.0
+        ]
+      }
+    }
+  },
+  "stages": {
+    "stock_extraction": {
+      "records": 635
+    },
+    "news_extraction": {
+      "records": 50
+    },
+    "indicators_extraction": {
+      "records": 60
+    },
+    "stock_validation": {
+      "timestamp": "2025-10-29T15:23:23.003600",
+      "total_records": 635,
+      "checks": [
+        {
+          "check": "missing_values",
+          "passed": true,
+          "details": {
+            "Open": "0.00%",
+            "High": "0.00%",
+            "Low": "0.00%",
+            "Close": "0.00%",
+            "Volume": "0.00%",
+            "Dividends": "0.00%",
+            "Stock Splits": "0.00%",
+            "ticker": "0.00%",
+            "extracted_at": "0.00%"
+          }
+        },
+        {
+          "check": "duplicates",
+          "passed": true,
+          "duplicates_found": 

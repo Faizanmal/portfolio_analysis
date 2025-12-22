@@ -1,0 +1,79 @@
+{
+  "train_accuracy": 1.0,
+  "test_accuracy": 0.9925,
+  "classification_report": {
+    "High": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 147.0
+    },
+    "Low": {
+      "precision": 1.0,
+      "recall": 0.967391304347826,
+      "f1-score": 0.9834254143646409,
+      "support": 92.0
+    },
+    "Medium": {
+      "precision": 0.9817073170731707,
+      "recall": 1.0,
+      "f1-score": 0.9907692307692307,
+      "support": 161.0
+    },
+    "accuracy": 0.9925,
+    "macro avg": {
+      "precision": 0.9939024390243901,
+      "recall": 0.9891304347826088,
+      "f1-score": 0.9913982150446238,
+      "support": 400.0
+    },
+    "weighted avg": {
+      "precision": 0.9926371951219513,
+      "recall": 0.9925,
+      "f1-score": 0.9924724606884828,
+      "support": 400.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      147,
+      0,
+      0
+    ],
+    [
+      0,
+      89,
+      3
+    ],
+    [
+      0,
+      0,
+      161
+    ]
+  ],
+  "feature_importance": {
+    "revenue": 0.009703776336985633,
+    "cogs": 0.004458847980780179,
+    "net_income": 0.08961304348788551,
+    "total_assets": 0.004121649678751255,
+    "total_debt": 0.09363343859454355,
+    "total_equity": 0.08475583335788625,
+    "current_assets": 0.00435466328874783,
+    "current_liabilities": 0.003897887105537121,
+    "cash": 0.005005632172133774,
+    "inventory": 0.004760586361894758,
+    "debt_to_equity": 0.34279968040786646,
+    "current_ratio": 0.004241391374012726,
+    "profit_margin": 0.11576915747029276,
+    "roe": 0.10667298220956876,
+    "roa": 0.07827013053418788,
+    "revenue_growth": 0.007302627248622286,
+    "income_growth": 0.015771929634339456,
+    "cash_ratio": 0.005279351334513905,
+    "quick_ratio": 0.0040432996646538955,
+    "asset_turnover": 0.00659160386337371,
+    "inventory_turnover": 0.004250937556740801,
+    "revenue_volatility": 0.004701550336681236
+  },
+  "trained_at": "2025-12-07T13:29:39.402272"
+}

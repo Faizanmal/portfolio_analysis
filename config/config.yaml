@@ -1,0 +1,154 @@
+# Configuration file for the AI Portfolio Analysis Platform
+
+# Application Settings
+app:
+  name: "AI Portfolio Analysis Platform"
+  version: "1.0.0"
+  debug: false
+  timezone: "America/New_York"
+
+# Model Settings
+models:
+  risk_predictor:
+    path: "data/models/risk_predictor.pkl"
+    confidence_threshold: 0.75
+    retrain_frequency_days: 30
+  
+  sentiment_analyzer:
+    model_name: "ProsusAI/finbert"
+    batch_size: 8
+    max_text_length: 512
+  
+  portfolio_optimizer:
+    risk_free_rate: 0.02
+    default_method: "max_sharpe"
+
+# Data Pipeline Settings
+data_pipeline:
+  enabled: true
+  schedule: "daily"
+  schedule_time: "06:00"
+  sources:
+    - yahoo_finance
+    - alpha_vantage
+  tickers:
+    - AAPL
+    - GOOGL
+    - MSFT
+    - AMZN
+    - TSLA
+  period: "1y"
+  validation:
+    max_missing_pct: 10
+    min_data_points: 100
+
+# Automation Settings
+automation:
+  scheduler:
+    enabled: true
+    max_instances: 3
+    jobs:
+      - id: "daily_data_pipeline"
+        function: "run_data_pipeline"
+        schedule: "cron"
+        cron: "0 6 * * *"
+      
+      - id: "weekly_report"
+        function: "run_report_generation"
+        schedule: "cron"
+        cron: "0 8 * * 1"
+      
+      - id: "monthly_retraining"
+        function: "run_model_retraining"
+        schedule: "cron"
+        cron: "0 2 1 * *"
+
+# Report Settings
+reports:
+  output_dir: "reports"
+  formats:
+    - html
+    - pdf
+  email_distribution:
+    enabled: false
+    recipients:
+      - admin@example.com
+  
+# API Settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+  cors:
+    enabled: true
+    allowed_origins:
+      - "http://localhost:8501"
+      - "http://localhost:3000"
+  rate_limiting:
+    enabled: true
+    requests_per_hour: 1000
+    requests_per_minute: 100
+
+# Dashboard Settings
+dashboard:
+  port: 8501
+  title: "AI Portfolio Analysis Platform"
+  theme: "light"
+  cache_ttl: 3600
+
+# Database Settings
+database:
+  type: "sqlite"
+  path: "data/portfolio_analysis.db"
+  # For PostgreSQL:
+  # type: "postgresql"
+  # host: "localhost"
+  # port: 5432
+  # name: "portfolio_analysis"
+  # user: "dbuser"
+  # password: "dbpassword"
+
+# Cache Settings
+cache:
+  enabled: true
+  backend: "redis"
+  redis_url: "redis://localhost:6379/0"
+  ttl: 3600
+
+# Logging Settings
+logging:
+  level: "INFO"
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name} | {message}"
+  rotation: "10 MB"
+  retention: "30 days"
+  destinations:
+    - type: "file"
+      path: "logs/app.log"
+    - type: "console"
+
+# Monitoring Settings
+monitoring:
+  enabled: false
+  sentry:
+    enabled: false
+    dsn: ""
+  prometheus:
+    enabled: false
+    port: 9090
+
+# Feature Flags
+features:
+  llm_integration: true
+  email_notifications: false
+  webhooks: false
+  advanced_analytics: true
+  experimental_features: false
+
+# Security Settings
+security:
+  api_key_required: false
+  jwt_secret: "change-this-in-production"
+  jwt_expiry_hours: 24
+  cors_max_age: 3600
+  rate_limit_storage: "redis"
