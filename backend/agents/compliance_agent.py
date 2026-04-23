@@ -14,17 +14,16 @@ Responsibilities:
 - Ensure explainability for regulators
 """
 
-import asyncio
 import json
 import hashlib
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Tuple
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 import logging
 import uuid
 
-from .base_agent import BaseAgent, AgentTask, AgentPriority
+from .base_agent import BaseAgent, AgentTask
 
 
 class ComplianceStatus(Enum):
@@ -472,7 +471,7 @@ class ComplianceAgent(BaseAgent):
         else:
             return (
                 ComplianceStatus.PASS,
-                f"Sector concentration within limits",
+                "Sector concentration within limits",
                 None
             )
     
@@ -494,7 +493,7 @@ class ComplianceAgent(BaseAgent):
             return (
                 ComplianceStatus.FAIL,
                 f"Leverage {new_leverage:.2f}x would exceed limit of {max_leverage:.2f}x",
-                f"Reduce margin usage before this trade"
+                "Reduce margin usage before this trade"
             )
         else:
             return (

@@ -24,10 +24,10 @@ from dataclasses import dataclass
 import logging
 from scipy import stats
 import warnings
-warnings.filterwarnings('ignore')
-
-from .base_agent import BaseAgent, AgentTask, AgentPriority
 import yfinance as yf
+from .base_agent import BaseAgent, AgentTask, AgentPriority
+
+warnings.filterwarnings('ignore')
 
 
 @dataclass

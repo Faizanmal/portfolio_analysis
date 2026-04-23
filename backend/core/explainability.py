@@ -11,14 +11,16 @@ Features:
 - Regulator-ready explanations
 - Decision visualization
 """
+from __future__ import annotations
 
 import numpy as np
-import pandas as pd
 from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, TYPE_CHECKING
 from dataclasses import dataclass, field
 import logging
-import json
+
+if TYPE_CHECKING:
+    from .cai_orchestrator import CAIDecision
 
 try:
     import shap
@@ -182,7 +184,7 @@ Following capital preservation principle, we defer this decision.
             try:
                 # Try tree explainer first (fast for tree-based models)
                 self.explainers[model_id] = shap.TreeExplainer(model)
-            except:
+            except Exception:
                 try:
                     # Fall back to kernel explainer
                     self.explainers[model_id] = shap.KernelExplainer(
@@ -294,7 +296,6 @@ Following capital preservation principle, we defer this decision.
             
             # Prepare feature array
             features = np.array([list(feature_values.values())])
-            feature_names = list(feature_values.keys())
             
             # Calculate SHAP values
             shap_values = explainer.shap_values(features)

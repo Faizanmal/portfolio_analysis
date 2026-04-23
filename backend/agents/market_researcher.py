@@ -12,17 +12,15 @@ Responsibilities:
 - Alpha opportunity discovery
 """
 
-import asyncio
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Tuple
+from datetime import datetime
+from typing import Dict, List, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-from scipy import stats
 
-from .base_agent import BaseAgent, AgentTask, AgentPriority
+from .base_agent import BaseAgent, AgentTask
 
 
 class MarketRegime(Enum):

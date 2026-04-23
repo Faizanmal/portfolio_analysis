@@ -13,13 +13,11 @@ Comprehensive crypto portfolio management with:
 
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Tuple
+from datetime import datetime
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-import asyncio
-import json
 
 
 class BlockchainNetwork(Enum):

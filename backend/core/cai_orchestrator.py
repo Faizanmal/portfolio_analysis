@@ -23,14 +23,11 @@ Global Operating Constraints (NON-NEGOTIABLE):
 
 import asyncio
 import logging
-import json
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
-from abc import ABC, abstractmethod
-import numpy as np
 
 
 class DecisionType(Enum):
@@ -278,7 +275,6 @@ class DecisionPipeline:
     
     async def _ingest_data(self, state: Dict) -> Tuple[bool, Any]:
         """Step 1: Ingest data from all sources"""
-        context = state["context"]
         inputs = []
         
         # Collect from all agents
@@ -467,7 +463,7 @@ class DecisionPipeline:
             
             # HOLD actions don't need simulation
             if candidate.get("action") == "HOLD":
-                self.logger.debug(f"Creating simple simulation for HOLD action")
+                self.logger.debug("Creating simple simulation for HOLD action")
                 simulations[cid] = {
                     "expected_outcome": "maintain_position",
                     "risk_level": "low",

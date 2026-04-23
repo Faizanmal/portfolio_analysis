@@ -11,7 +11,7 @@ Marketplace for trading strategies:
 
 import uuid
 from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -500,7 +500,7 @@ class StrategyMarketplace:
         asset_classes: List[str] = None,
         min_sharpe: float = None,
         max_drawdown: float = None,
-        price_range: Tuple = None,
+        price_range: Tuple[Any, Any] = None,
         min_rating: float = None,
         tags: List[str] = None,
         sort_by: str = "popularity"
@@ -576,8 +576,8 @@ class StrategyMarketplace:
     
     def get_featured_strategies(self, limit: int = 10) -> List[StrategyListing]:
         """Get featured strategies"""
-        featured = [l for l in self.listings.values() 
-                   if l.featured and l.status == StrategyStatus.PUBLISHED]
+        featured = [listing for listing in self.listings.values() 
+                   if listing.featured and listing.status == StrategyStatus.PUBLISHED]
         
         # Sort by some criteria (rating, sales, etc.)
         featured.sort(key=lambda x: (x.avg_rating * x.purchases), reverse=True)
@@ -586,8 +586,8 @@ class StrategyMarketplace:
     
     def get_top_performers(self, limit: int = 10) -> List[StrategyListing]:
         """Get top performing strategies"""
-        published = [l for l in self.listings.values() 
-                    if l.status == StrategyStatus.PUBLISHED and l.strategy.metrics]
+        published = [listing for listing in self.listings.values() 
+                    if listing.status == StrategyStatus.PUBLISHED and listing.strategy.metrics]
         
         published.sort(
             key=lambda x: x.strategy.metrics.sharpe_ratio if x.strategy.metrics else 0,
@@ -686,8 +686,8 @@ class StrategyMarketplace:
     
     def get_marketplace_stats(self) -> Dict[str, Any]:
         """Get marketplace statistics"""
-        published = [l for l in self.listings.values() 
-                    if l.status == StrategyStatus.PUBLISHED]
+        published = [listing for listing in self.listings.values() 
+                    if listing.status == StrategyStatus.PUBLISHED]
         
         total_revenue = sum(p.price_paid for p in self.purchases.values() if not p.refunded)
         
@@ -699,10 +699,9 @@ class StrategyMarketplace:
             'platform_earnings': total_revenue * (self.platform_fee_percent / 100),
             'unique_sellers': len(self.seller_listings),
             'unique_buyers': len(self.user_purchases),
-            'avg_strategy_price': sum(l.price for l in published) / len(published) if published else 0,
-            'avg_rating': sum(l.avg_rating for l in published) / len(published) if published else 0
+            'avg_strategy_price': sum(listing.price for listing in published) / len(published) if published else 0,
+            'avg_rating': sum(listing.avg_rating for listing in published) / len(published) if published else 0
         }
 
 
 # Convenience type alias
-from typing import Tuple

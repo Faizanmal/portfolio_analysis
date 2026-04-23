@@ -10,11 +10,9 @@ Comprehensive fixed income portfolio management:
 - Interest rate scenario analysis
 """
 
-import numpy as np
-import pandas as pd
 from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Tuple
-from dataclasses import dataclass, field
+from typing import Dict, List, Any, Optional
+from dataclasses import dataclass
 from enum import Enum
 import logging
 from scipy.optimize import brentq

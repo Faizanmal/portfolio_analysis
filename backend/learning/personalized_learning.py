@@ -12,8 +12,6 @@ AI-powered learning platform for portfolio analysis with:
 Progressive disclosure of features to avoid overwhelming new users.
 """
 
-import asyncio
-import json
 import secrets
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Set
@@ -1156,7 +1154,7 @@ class PersonalizedLearningPlatform:
         # Check course completion
         course = await self.content.get_course(lesson.course_id)
         course_completed = False
-        if course and all(l in profile.completed_lessons for l in course.lessons):
+        if course and all(lesson_id in profile.completed_lessons for lesson_id in course.lessons):
             profile.completed_courses.add(course.course_id)
             course_completed = True
             course_xp = await self.gamification.award_xp(

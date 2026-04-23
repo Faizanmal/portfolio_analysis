@@ -19,13 +19,10 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-from plotly.subplots import make_subplots
 from pathlib import Path
 import sys
-import json
 from datetime import datetime, timedelta
-from typing import Dict, Any, Optional, List
-import asyncio
+from typing import Dict, Any, List
 
 # Add parent to path
 sys.path.append(str(Path(__file__).parent.parent))
@@ -320,7 +317,7 @@ def show_cai_dashboard():
     
     # Get status data
     cai_status = get_mock_cai_status()
-    kill_switches = get_mock_kill_switches()
+    get_mock_kill_switches()
     regime = get_mock_market_regime()
     
     # CAI Status Header
@@ -690,7 +687,7 @@ def show_explainability():
         st.markdown("---")
         
         # Audience selector
-        audience = st.selectbox(
+        st.selectbox(
             "Explanation Format",
             ["Portfolio Committee", "Risk Committee", "Regulator", "Technical"]
         )
@@ -1689,8 +1686,8 @@ def show_predictive_analytics_page():
         
         col1, col2 = st.columns(2)
         with col1:
-            n_simulations = st.slider("Number of Simulations", 100, 10000, 1000)
-            time_horizon = st.slider("Time Horizon (days)", 30, 365, 90)
+            st.slider("Number of Simulations", 100, 10000, 1000)
+            st.slider("Time Horizon (days)", 30, 365, 90)
         with col2:
             st.markdown("**Portfolio Value Scenarios:**")
             st.metric("5th Percentile (Worst)", "$95,000", "-5%")

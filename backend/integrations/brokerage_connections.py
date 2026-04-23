@@ -13,7 +13,7 @@ Connect to various brokerage platforms:
 import uuid
 from datetime import datetime
 from typing import Dict, List, Any, Optional
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from abc import ABC, abstractmethod
 import logging
@@ -393,7 +393,7 @@ class TDAmeritradeConnector(BrokerageConnection):
             submitted_at=datetime.now()
         )
         
-        self.logger.info(f"Placed order on TD Ameritrade")
+        self.logger.info("Placed order on TD Ameritrade")
         
         return order
     

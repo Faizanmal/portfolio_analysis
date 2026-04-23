@@ -11,7 +11,7 @@ Connect to banking platforms for:
 import uuid
 from datetime import datetime
 from typing import Dict, List, Any, Optional
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from abc import ABC, abstractmethod
 import logging

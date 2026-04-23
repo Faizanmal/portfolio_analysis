@@ -11,13 +11,12 @@ Enterprise multi-tenancy support:
 """
 
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, List, Any, Optional, Set
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
 import hashlib
-from abc import ABC, abstractmethod
 
 
 class TenantTier(Enum):
@@ -402,7 +401,7 @@ class TenantManager:
     def _provision_resources(self, tenant: Tenant):
         """Provision resources for tenant"""
         # Create storage directory
-        storage_path = self.isolation.get_storage_path(tenant.tenant_id)
+        self.isolation.get_storage_path(tenant.tenant_id)
         
         # If schema isolation, create schema
         if tenant.isolation_level == IsolationLevel.SCHEMA:

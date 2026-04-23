@@ -10,9 +10,8 @@ RL-based portfolio optimization:
 """
 
 import numpy as np
-from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple, Callable
-from dataclasses import dataclass, field
+from typing import Dict, List, Any, Optional, Tuple
+from dataclasses import dataclass
 from enum import Enum
 import logging
 

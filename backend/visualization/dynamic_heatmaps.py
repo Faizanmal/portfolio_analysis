@@ -13,14 +13,13 @@ Advanced correlation and exposure analysis with:
 
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-import json
 from scipy import stats
-from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
+from scipy.cluster.hierarchy import linkage, fcluster
 
 
 class HeatmapType(Enum):
@@ -233,7 +232,6 @@ class CorrelationAnalyzer:
         Calculate Dynamic Conditional Correlation (DCC) model.
         Uses exponentially weighted approach for simplicity.
         """
-        n_assets = len(returns.columns)
         n_periods = len(returns)
         
         # Initialize
@@ -362,7 +360,6 @@ class DynamicHeatmapEngine:
         col_labels = list(corr_matrix.columns)
         
         # Apply clustering if requested
-        row_dendogram = None
         clusters = None
         
         if cluster and len(row_labels) > 2:
@@ -700,7 +697,6 @@ class DynamicHeatmapEngine:
         
         cells = []
         min_val = drawdown_matrix.values.min()
-        max_val = 0  # Drawdowns are always negative
         
         for asset in assets:
             for period in period_labels:

@@ -22,8 +22,6 @@ from typing import Dict, List, Any, Optional, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-from abc import ABC, abstractmethod
-import redis
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -378,7 +376,7 @@ class PushNotificationService:
     
     async def _send_apns(self, token: str, notification: PushNotification) -> Dict[str, Any]:
         """Send notification via Apple Push Notification Service"""
-        payload = notification.to_fcm_payload()["apns"]
+        notification.to_fcm_payload()["apns"]
         
         # In production, use httpx with APNS HTTP/2 endpoint
         self.logger.info(f"Sending APNS notification to {token[:20]}...")
@@ -386,10 +384,10 @@ class PushNotificationService:
     
     async def _send_web_push(self, token: str, notification: PushNotification) -> Dict[str, Any]:
         """Send Web Push notification"""
-        payload = notification.to_fcm_payload()["webpush"]
+        notification.to_fcm_payload()["webpush"]
         
         # In production, use pywebpush
-        self.logger.info(f"Sending Web Push notification...")
+        self.logger.info("Sending Web Push notification...")
         return {"success": True, "message_id": secrets.token_urlsafe(8)}
     
     async def _get_user_sessions(self, user_id: str) -> List[DeviceSession]:
@@ -1352,7 +1350,7 @@ class MobileAPIService:
         """Background worker for notification delivery"""
         while True:
             try:
-                notification = await self.push_service.notification_queue.get()
+                await self.push_service.notification_queue.get()
                 # Process notification
                 await asyncio.sleep(0.1)
             except Exception as e:
@@ -1363,7 +1361,7 @@ class MobileAPIService:
         """Background worker for offline sync"""
         while True:
             try:
-                operation = await self.offline_manager.sync_queue.get()
+                await self.offline_manager.sync_queue.get()
                 # Process sync operation
                 await asyncio.sleep(0.1)
             except Exception as e:
@@ -1372,7 +1370,7 @@ class MobileAPIService:
     
     def get_api_routes(self):
         """Get FastAPI routes for mobile endpoints"""
-        from fastapi import APIRouter, HTTPException, Depends
+        from fastapi import APIRouter
         from pydantic import BaseModel
         
         router = APIRouter(prefix="/mobile", tags=["Mobile PWA"])

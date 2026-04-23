@@ -15,14 +15,12 @@ Uses Three.js/Babylon.js backends with Python data processing.
 import numpy as np
 import pandas as pd
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
 import math
-import colorsys
-from abc import ABC, abstractmethod
 
 
 class VisualizationMode(Enum):
@@ -353,7 +351,6 @@ class ARPortfolioVisualizer:
         current_x = -width / 2
         current_z = -depth / 2
         row_height = 0
-        max_row_width = width
         
         for _, row in sorted_data.iterrows():
             allocation = row.get('allocation_pct', 1)

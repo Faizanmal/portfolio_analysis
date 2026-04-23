@@ -21,18 +21,21 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List, Dict, Optional
-import pandas as pd
 from datetime import datetime
-import sys
 from pathlib import Path
 from loguru import logger
-
-# Add parent directory to path
-sys.path.append(str(Path(__file__).parent.parent))
+import pandas as pd
 
 from models.risk_predictor import RiskPredictor
 from models.sentiment_analyzer import SentimentAnalyzer
 from models.portfolio_optimizer import PortfolioOptimizer
+
+
+class HealthResponse(BaseModel):
+    status: str
+    timestamp: str
+    models_loaded: Optional[Dict[str, bool]] = None
+    version: Optional[str] = None
 
 # Import new feature modules
 try:
@@ -190,102 +193,86 @@ class PortfolioResponse(BaseModel):
     """Portfolio optimization response."""
     weights: Dict[str, float]
     expected_return: float
-    global mobile_service, social_platform, analytics_platform
-    global collaboration_platform, ai_assistant, learning_platform
-    
-    logger.info("Loading models...")
-    
-    try:
-        # Load risk prediction model
-        risk_model = RiskPredictor()
-        model_path = Path("data/models/risk_predictor.pkl")
-        if model_path.exists():
-            risk_model.load_model()
-            logger.info("Risk model loaded successfully")
-        else:
-            logger.warning("Risk model not found, will need to train first")
-        
-        # Load sentiment analyzer
-        sentiment_analyzer = SentimentAnalyzer()
-        logger.info("Sentiment analyzer loaded successfully")
-        
-        # Initialize portfolio optimizer
-        portfolio_optimizer = PortfolioOptimizer()
-        logger.info("Portfolio optimizer initialized")
-        
-        logger.info("All models loaded successfully")
-        
-    except Exception as e:
-        logger.error(f"Error loading models: {str(e)}")
-    
-    # Initialize new feature platforms
-    platform_config = {}
-    
-    try:
-        if MobileAPIService:
-            mobile_service = MobileAPIService(platform_config)
-            app.include_router(mobile_service.get_api_routes())
-            logger.info("Mobile PWA service initialized")
-    except Exception as e:
-        logger.warning(f"Mobile service not available: {e}")
-    
-    try:
-        if SocialTradingPlatform:
-            social_platform = SocialTradingPlatform(platform_config)
-            app.include_router(social_platform.get_api_routes())
-            logger.info("Social trading platform initialized")
-    except Exception as e:
-        logger.warning(f"Social platform not available: {e}")
-    
-    try:
-        if PredictiveAnalyticsPlatform:
-            analytics_platform = PredictiveAnalyticsPlatform(platform_config)
-            app.include_router(analytics_platform.get_api_routes())
-            logger.info("Predictive analytics platform initialized")
-    except Exception as e:
-        logger.warning(f"Analytics platform not available: {e}")
-    
-    try:
-        if CollaborationPlatform:
-            collaboration_platform = CollaborationPlatform(platform_config)
-            app.include_router(collaboration_platform.get_api_routes())
-            logger.info("Collaboration platform initialized")
-    except Exception as e:
-        logger.warning(f"Collaboration platform not available: {e}")
-    
-    try:
-        if ConversationalAI:
-            ai_assistant = ConversationalAI(platform_config)
-            app.include_router(ai_assistant.get_api_routes())
-            logger.info("Conversational AI assistant initialized")
-    except Exception as e:
-        logger.warning(f"AI assistant not available: {e}")
-    
-    try:
-        if PersonalizedLearningPlatform:
-            learning_platform = PersonalizedLearningPlatform(platform_config)
-            app.include_router(learning_platform.get_api_routes())
-            logger.info("Learning platform initialized")
-    except Exception as e:
-        logger.warning(f"Learning platform not available: {er.pkl")
-        if model_path.exists():
-            risk_model.load_model()
-            logger.info("Risk model loaded successfully")
-        else:
-            logger.warning("Risk model not found, will need to train first")
-        
-        # Load sentiment analyzer
-        sentiment_analyzer = SentimentAnalyzer()
-        logger.info("Sentiment analyzer loaded successfully")
-        
-        # Initialize portfolio optimizer
-        portfolio_optimizer = PortfolioOptimizer()
-        logger.info("Portfolio optimizer initialized")
-        
-        logger.info("All models loaded successfully")
-        
-    except Exception as e:
-        logger.error(f"Error loading models: {str(e)}")
+    volatility: float
+    sharpe_ratio: float
+    timestamp: str
+
+
+logger.info("Loading models...")
+
+try:
+    # Load risk prediction model
+    risk_model = RiskPredictor()
+    model_path = Path("data/models/risk_predictor.pkl")
+    if model_path.exists():
+        risk_model.load_model()
+        logger.info("Risk model loaded successfully")
+    else:
+        logger.warning("Risk model not found, will need to train first")
+
+    # Load sentiment analyzer
+    sentiment_analyzer = SentimentAnalyzer()
+    logger.info("Sentiment analyzer loaded successfully")
+
+    # Initialize portfolio optimizer
+    portfolio_optimizer = PortfolioOptimizer()
+    logger.info("Portfolio optimizer initialized")
+
+    logger.info("All models loaded successfully")
+
+except Exception as e:
+    logger.error(f"Error loading models: {str(e)}")
+
+# Initialize new feature platforms
+platform_config = {}
+
+try:
+    if MobileAPIService:
+        mobile_service = MobileAPIService(platform_config)
+        app.include_router(mobile_service.get_api_routes())
+        logger.info("Mobile PWA service initialized")
+except Exception as e:
+    logger.warning(f"Mobile service not available: {e}")
+
+try:
+    if SocialTradingPlatform:
+        social_platform = SocialTradingPlatform(platform_config)
+        app.include_router(social_platform.get_api_routes())
+        logger.info("Social trading platform initialized")
+except Exception as e:
+    logger.warning(f"Social platform not available: {e}")
+
+try:
+    if PredictiveAnalyticsPlatform:
+        analytics_platform = PredictiveAnalyticsPlatform(platform_config)
+        app.include_router(analytics_platform.get_api_routes())
+        logger.info("Predictive analytics platform initialized")
+except Exception as e:
+    logger.warning(f"Analytics platform not available: {e}")
+
+try:
+    if CollaborationPlatform:
+        collaboration_platform = CollaborationPlatform(platform_config)
+        app.include_router(collaboration_platform.get_api_routes())
+        logger.info("Collaboration platform initialized")
+except Exception as e:
+    logger.warning(f"Collaboration platform not available: {e}")
+
+try:
+    if ConversationalAI:
+        ai_assistant = ConversationalAI(platform_config)
+        app.include_router(ai_assistant.get_api_routes())
+        logger.info("Conversational AI assistant initialized")
+except Exception as e:
+    logger.warning(f"AI assistant not available: {e}")
+
+try:
+    if PersonalizedLearningPlatform:
+        learning_platform = PersonalizedLearningPlatform(platform_config)
+        app.include_router(learning_platform.get_api_routes())
+        logger.info("Learning platform initialized")
+except Exception as e:
+    logger.warning(f"Learning platform not available: {e}")
 
 
 @app.on_event("shutdown")

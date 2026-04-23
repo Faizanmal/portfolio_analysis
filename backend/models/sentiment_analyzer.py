@@ -60,7 +60,7 @@ class SentimentAnalyzer:
         # Load spaCy for NER
         try:
             self.nlp = spacy.load("en_core_web_sm")
-        except:
+        except Exception:
             logger.warning("spaCy model not found. Run: python -m spacy download en_core_web_sm")
             self.nlp = None
         
@@ -82,7 +82,7 @@ class SentimentAnalyzer:
         
         # Truncate text if too long (FinBERT max is 512 tokens)
         max_length = 512
-        inputs = self.tokenizer(text, truncation=True, max_length=max_length, return_tensors="pt")
+        self.tokenizer(text, truncation=True, max_length=max_length, return_tensors="pt")
         
         # Get FinBERT sentiment
         result = self.sentiment_pipeline(text[:512])[0]

@@ -12,13 +12,12 @@ Continuous self-improvement capabilities for the CAI system:
 
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Tuple
+from datetime import datetime
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
 from collections import deque
-import json
 from scipy import stats
 
 

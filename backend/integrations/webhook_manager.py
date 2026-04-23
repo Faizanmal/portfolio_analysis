@@ -13,8 +13,8 @@ import uuid
 import hmac
 import hashlib
 import json
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Callable
+from datetime import datetime
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -374,7 +374,7 @@ class WebhookManager:
         
         try:
             # Sign payload
-            signature = self._sign_payload(payload, webhook.secret)
+            self._sign_payload(payload, webhook.secret)
             
             # In production, use requests library to POST
             # import requests

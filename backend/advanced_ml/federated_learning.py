@@ -11,7 +11,7 @@ Privacy-preserving federated learning for portfolio analysis:
 
 import numpy as np
 from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple, Callable
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -201,8 +201,8 @@ class FederatedClient:
         # Simulate training (in production, use actual training loop)
         for epoch in range(epochs):
             for i in range(0, num_samples, batch_size):
-                batch_data = self.training_data[i:i+batch_size]
-                batch_labels = self.labels[i:i+batch_size]
+                self.training_data[i:i+batch_size]
+                self.labels[i:i+batch_size]
                 
                 # Compute gradients (simplified)
                 for name, weight in self.local_weights.items():

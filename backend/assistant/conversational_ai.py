@@ -12,8 +12,6 @@ Enterprise-grade conversational AI for portfolio analysis with:
 Makes complex financial data accessible to non-experts.
 """
 
-import asyncio
-import json
 import secrets
 import re
 from datetime import datetime, timedelta
@@ -21,8 +19,6 @@ from typing import Dict, List, Any, Optional, Tuple, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-from abc import ABC, abstractmethod
-from collections import defaultdict
 
 
 class IntentType(Enum):
@@ -854,7 +850,7 @@ Just ask naturally - I understand conversational language!"""
     
     def _generate_fallback_response(self, intent: Intent, context: ConversationContext) -> AIResponse:
         """Generate fallback response for unknown intents"""
-        text = f"""I'm not quite sure I understood that. Here's what I can help with:
+        text = """I'm not quite sure I understood that. Here's what I can help with:
 
 • Portfolio analysis and performance
 • Stock research and recommendations

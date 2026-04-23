@@ -14,11 +14,10 @@ import uuid
 import hashlib
 import secrets
 from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Callable
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-import json
 from collections import defaultdict
 
 
@@ -255,7 +254,6 @@ class APIUsageTracker:
         else:
             period_key = now.strftime("%Y%m")
         
-        counter_key = f"{key_id}:{period_key}"
         current_count = self.rate_limit_counters[key_id][period_key]
         
         allowed = current_count < (rate_limit.requests + rate_limit.burst_allowance)

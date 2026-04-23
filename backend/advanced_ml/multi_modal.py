@@ -12,7 +12,7 @@ Multi-modal AI for comprehensive analysis:
 import numpy as np
 import re
 from datetime import datetime
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging

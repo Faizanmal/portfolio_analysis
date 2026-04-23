@@ -12,12 +12,11 @@ Drag-and-drop report builder with:
 
 import json
 import uuid
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Callable
+from datetime import datetime
+from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-from io import BytesIO
 
 
 class WidgetType(Enum):
@@ -785,7 +784,7 @@ class DragDropBuilder:
             'palette': self.widget_palette,
             'data_sources': self._get_available_data_sources(),
             'style_options': self._get_style_options(),
-            'layout_options': [l.value for l in LayoutType],
+            'layout_options': [layout.value for layout in LayoutType],
             'page_sizes': ['A4', 'Letter', 'Legal', 'A3'],
             'font_options': ['Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Roboto']
         }
@@ -922,7 +921,7 @@ class ReportRenderer:
             "</style>",
             "</head>",
             "<body>",
-            f'<div class="report-container">',
+            '<div class="report-container">',
         ]
         
         # Header
@@ -1038,7 +1037,7 @@ class ReportRenderer:
         data: Dict[str, Any]
     ) -> str:
         """Render a section as HTML"""
-        html = [f'<div class="section">']
+        html = ['<div class="section">']
         
         if section.show_title:
             html.append(f'<div class="section-title">{section.title}</div>')
@@ -1060,7 +1059,7 @@ class ReportRenderer:
         """Render a widget as HTML"""
         value = self._get_data_value(widget.data_source, data)
         
-        html = [f'<div class="widget">']
+        html = ['<div class="widget">']
         
         if widget.show_title:
             html.append(f'<div class="widget-title">{widget.title}</div>')

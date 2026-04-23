@@ -20,8 +20,6 @@ from typing import Dict, List, Any, Optional, Callable, Set
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-from collections import defaultdict
-import hashlib
 
 
 class Permission(Enum):
@@ -1276,7 +1274,7 @@ class CollaborationPlatform:
             
             try:
                 while True:
-                    data = await websocket.receive_text()
+                    await websocket.receive_text()
                     # Handle incoming WebSocket messages
             except WebSocketDisconnect:
                 self.workspace_manager.websocket_connections[workspace_id].discard(websocket)

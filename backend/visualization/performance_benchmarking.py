@@ -12,12 +12,11 @@ Real-time performance benchmarking against:
 
 import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-import json
 from scipy import stats
 
 
@@ -204,7 +203,6 @@ class PerformanceBenchmark:
         volatility = returns.std() * np.sqrt(ann_factor)
         
         # Risk-adjusted returns
-        excess_returns = returns - self.risk_free_rate / ann_factor
         sharpe_ratio = (annualized_return - self.risk_free_rate) / volatility if volatility > 0 else 0
         
         # Sortino ratio (downside deviation)
@@ -569,9 +567,9 @@ class PeerComparisonEngine:
         if rankings['return'] >= 90:
             insights.append(f"Outstanding performance - top 10% of {group.name}")
         elif rankings['return'] >= 75:
-            insights.append(f"Strong performance - outperforming 75% of peers")
+            insights.append("Strong performance - outperforming 75% of peers")
         elif rankings['return'] < 25:
-            insights.append(f"Performance lagging - in bottom quartile of peers")
+            insights.append("Performance lagging - in bottom quartile of peers")
         
         if rankings['sharpe'] >= 80:
             insights.append("Excellent risk-adjusted returns relative to peers")

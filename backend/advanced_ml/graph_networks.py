@@ -82,7 +82,7 @@ class PortfolioGraph:
     def add_edge(self, edge: GraphEdge):
         """Add an edge to the graph"""
         if edge.source_id not in self.nodes or edge.target_id not in self.nodes:
-            self.logger.warning(f"Edge references unknown node(s)")
+            self.logger.warning("Edge references unknown node(s)")
             return
         
         self.edges.append(edge)

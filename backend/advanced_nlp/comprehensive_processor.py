@@ -19,49 +19,29 @@ Key Features:
 
 import asyncio
 import re
-import json
-import pickle
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Tuple, AsyncGenerator, Union
+from datetime import datetime
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 import logging
-from collections import defaultdict, deque
-from pathlib import Path
-import hashlib
+from collections import defaultdict
 
 # NLP and ML libraries
-import torch
-import torch.nn as nn
 from transformers import (
-    AutoTokenizer, AutoModel, AutoModelForSequenceClassification,
-    pipeline, AutoModelForQuestionAnswering, T5ForConditionalGeneration,
-    BertTokenizer, BertForSequenceClassification, GPT2LMHeadModel
+    pipeline
 )
 import spacy
-from spacy import displacy
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from sentence_transformers import SentenceTransformer
-import openai
 from textblob import TextBlob
 
 # Data processing
-import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans, DBSCAN
 from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.metrics.pairwise import cosine_similarity
-import networkx as nx
 
 # Document processing
-import fitz  # PyMuPDF
-from docx import Document
-import pdfplumber
-from bs4 import BeautifulSoup
-import requests
-import yfinance as yf
 
 
 @dataclass
@@ -1280,8 +1260,8 @@ class DocumentProcessor:
         text = re.sub(r'[^\w\s\.\,\!\?\;\:\$\%\(\)\-]', '', text)
         
         # Normalize quotes
-        text = re.sub(r'["""]', '"', text)
-        text = re.sub(r'[''']', "'", text)
+        text = re.sub(r'"{2,}', '"', text)
+        text = re.sub(r"'{2,}", "'", text)
         
         return text.strip()
     

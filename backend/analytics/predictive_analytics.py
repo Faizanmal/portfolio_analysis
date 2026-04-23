@@ -14,17 +14,13 @@ Users want forward-looking insights, not just historical analysis.
 
 import asyncio
 import numpy as np
-import pandas as pd
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
-from abc import ABC, abstractmethod
-import json
 import secrets
 from scipy import stats
-from scipy.optimize import minimize
 from collections import defaultdict
 
 
@@ -1363,7 +1359,7 @@ class PredictiveAnalyticsPlatform:
     
     def get_api_routes(self):
         """Get FastAPI routes for predictive analytics endpoints"""
-        from fastapi import APIRouter, HTTPException
+        from fastapi import APIRouter
         from pydantic import BaseModel
         
         router = APIRouter(prefix="/analytics", tags=["Predictive Analytics"])

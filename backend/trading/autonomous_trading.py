@@ -29,7 +29,6 @@ import logging
 from abc import ABC, abstractmethod
 from collections import deque
 import warnings
-warnings.filterwarnings('ignore')
 
 # ML and RL imports
 from sklearn.preprocessing import StandardScaler
@@ -40,6 +39,8 @@ from gym import spaces
 # Financial libraries
 import yfinance as yf
 import talib
+
+warnings.filterwarnings('ignore')
 
 
 class OrderType(Enum):
@@ -454,7 +455,6 @@ class MomentumStrategy(BaseStrategy):
         portfolio_value = portfolio_state.get('total_value', 100000)
         
         # Simple volatility estimate
-        symbol = signal['symbol']
         current_price = signal['metadata']['current_price']
         
         # Base position size (1% of portfolio)

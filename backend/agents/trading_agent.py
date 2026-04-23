@@ -10,17 +10,19 @@ Reinforcement Learning trading agent with full CAI integration:
 - Kill switch respect
 """
 
-import asyncio
+from __future__ import annotations
+
 import numpy as np
-import pandas as pd
-from datetime import datetime, timedelta
-from typing import Dict, List, Any, Optional, Tuple
+from datetime import datetime
+from typing import Dict, List, Any
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
 import uuid
 
-from agents.base_agent import BaseAgent, AgentTask, AgentPriority
+from ..core.cai_orchestrator import MarketRegime
+
+from agents.base_agent import BaseAgent, AgentTask
 
 
 class StrategyType(Enum):
@@ -462,7 +464,6 @@ class EnhancedTradingAgent(BaseAgent):
         """Volatility-based strategy"""
         signals = []
         
-        vix = data.get('vix', 20)
         vix_percentile = data.get('vix_percentile', 50)
         
         if vix_percentile > 90:

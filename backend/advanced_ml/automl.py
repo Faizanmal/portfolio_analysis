@@ -214,8 +214,6 @@ class RandomForestModel(BaseModel):
         n_samples = X.shape[0]
         n_features = X.shape[1]
         
-        feature_usage = np.zeros(n_features)
-        
         for _ in range(self.n_trees):
             # Bootstrap sample
             indices = np.random.choice(n_samples, n_samples, replace=True)
